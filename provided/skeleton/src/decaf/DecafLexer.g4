@@ -18,7 +18,7 @@ LCURLY : '{';
 RCURLY : '}';
 
 ID  :
-  (LETRAS|ESPC)(LETRAS|ESPC|INT)*;
+  (LETRAS|ESPC)+;
 
 WS_ : (' ' | '\n' ) -> skip;
 
