@@ -18,7 +18,7 @@ OBS:
 OBS2: 
  - Caso os camandos acima não funcionem, utilize os passos abaixo:
  
- # INTALANDO ANTLR
+ # INSTALANDO ANTLR
  - cd /usr/local/lib
  
  - sudo curl -O https://www.antlr.org/download/antlr-4.7.2-complete.jar
