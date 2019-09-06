@@ -18,14 +18,25 @@ LCURLY : '{';
 RCURLY : '}';
 
 ID  :
-  ('a'..'z' | 'A'..'Z')+;
+  (LETRAS|ESPC)(LETRAS|ESPC|INT)*;
 
 WS_ : (' ' | '\n' ) -> skip;
 
 SL_COMMENT : '//' (~'\n')* '\n' -> skip;
 
-CHAR : '\'' (ESC|~'\'') '\'';
-STRING : '"' (ESC|~'"')* '"';
+CHAR : '\'' (ESC|LETRAS|INT) '\'';
+STRING : '"' (ESC|'"'|LETRAS|INT)* '"';
+
+HEX : '0x'('a'..'f'|'A'..'F'|INT)+;
 
 fragment
 ESC :  '\\' ('n'|'"'|'t'|'\\');
+
+fragment
+INT : [0-9]+;
+
+fragment
+ESPC : (';'|'-'|'_'|'   ');
+
+fragment
+LETRAS : ('a'..'z'|'A'..'Z');
