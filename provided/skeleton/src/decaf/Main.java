@@ -40,6 +40,9 @@ class Main {
                             case DecafLexer.HEX:
                                 type = " INTLITERAL";
                                 break;
+                            case DecafLexer.NUM:
+                                type = " INTLITERAL";
+                                break;
                             case DecafLexer.IF:
                                 type = "";
                                 break;      

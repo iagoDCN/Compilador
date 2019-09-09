@@ -17,12 +17,18 @@ tokens
 LCURLY : '{';
 RCURLY : '}';
 
-IF : 'if';
+PLEFT : '(';
+PRIGHT : ')';
+
+IF: 'if';
+MENOS : '-';
+
 
 ID  :
-  (LETRAS|ESPC)+(LETRAS|INT|ESPC)*;
+  (LETRAS|'_')(LETRAS|INT|'_')*;
 
 WS_ : (' ' | '\n' ) -> skip;
+
 
 SL_COMMENT : '//' (~'\n')* '\n' -> skip;
 
@@ -31,15 +37,16 @@ STRING : '"' (ESC|'"'|LETRAS|INT)* '"';
 
 HEX : '0x'('a'..'f'|'A'..'F'|INT)+;
 
+NUM : INT(INT)*;
 
 fragment
 ESC :  '\\' ('n'|'"'|'t'|'\\');
 
 fragment
-INT : [0-9]+;
+INT : ('0'..'9')+;
 
 fragment
-ESPC : (';'|'-'|'_'|'   ');
+ESPC : (';'|'_'|'   ');
 
 fragment
 LETRAS : ('a'..'z'|'A'..'Z');
