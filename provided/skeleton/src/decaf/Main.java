@@ -40,6 +40,9 @@ class Main {
                             case DecafLexer.HEX:
                                 type = " INTLITERAL";
                                 break;
+                            case DecafLexer.IF:
+                                type = "";
+                                break;      
 		        			}
 		        			System.out.println (token.getLine() + type + " " + text);
 		        		}

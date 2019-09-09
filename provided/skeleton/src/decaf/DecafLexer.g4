@@ -17,6 +17,8 @@ tokens
 LCURLY : '{';
 RCURLY : '}';
 
+IF : 'if';
+
 ID  :
   (LETRAS|ESPC)+(LETRAS|INT|ESPC)*;
 
@@ -28,6 +30,7 @@ CHAR : '\'' (ESC|LETRAS|INT) '\'';
 STRING : '"' (ESC|'"'|LETRAS|INT)* '"';
 
 HEX : '0x'('a'..'f'|'A'..'F'|INT)+;
+
 
 fragment
 ESC :  '\\' ('n'|'"'|'t'|'\\');
