@@ -50,39 +50,7 @@ class Main {
 							case DecafLexer.BOOLEANLITERAL:
 								type = " BOOLEANLITERAL";
 								break; 
-							case DecafLexer.T_BOOLEAN:
-								type = "";
-								break; 
-							case DecafLexer.T_CALLOUT:
-								type = "";
-								break; 
-							case DecafLexer.T_CLASS:
-								type = "";
-								break; 
-							case DecafLexer.T_IF:
-								type = "";
-								break;
-							case DecafLexer.T_ELSE:
-								type = "";
-								break;   
-							case DecafLexer.T_INT:
-								type = "";
-								break; 
-							case DecafLexer.T_VOID:
-								type = "";
-								break; 
-							case DecafLexer.T_FOR:
-								type = "";
-								break; 
-							case DecafLexer.T_BREAK:
-								type = "";
-								break;
-							case DecafLexer.T_CONTINUE:
-								type = "";
-								break; 
-							case DecafLexer.T_RETURN:
-								type = "";
-								break;   
+
 						}
 		        			System.out.println (token.getLine() + type + " " + text);
 		        		}
