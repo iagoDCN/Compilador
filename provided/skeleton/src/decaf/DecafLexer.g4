@@ -14,50 +14,124 @@ tokens
   TK_class
 }
 
-IF: 'if';
+T_IF	: 'if'
+	;
 
-LCURLY : '{';
-RCURLY : '}';
-CLEFT : '[';
-CRIGHT : ']';
-PLEFT : '(';
-PRIGHT : ')';
+T_ELSE	: 'else'
+	;
 
-VEZES : '*';
-MENOS : '-';
-MAIS  : '+';
-E    : '&&';
+T_CLASS	: 'class'
+	;
 
-DIFERENTE : '!=';
-MENORQ    : '<';
-MENORIGUAL : '<=';
+T_INT	: 'int'
+	;
+
+T_VOID	: 'void'
+	;
+
+T_FOR	: 'for'
+	;
+
+T_BREAK	: 'break'
+	;
+
+T_CALLOUT	: 'callout'
+		;
+
+T_CONTINUE	: 'continue'
+		;
+
+T_BOOLEAN	: 'boolean'
+		;
+
+T_RETURN	: 'return'
+		;
 
 
-ID  :
-  (LETRAS|ESPC)(LETRAS|INT|ESPC)*;
+BOOLEANLITERAL	: 'true' | 'false'
+		;
 
-WS_ : [ \t\r\n]+ -> skip;
+LCURLY	: '{'
+	;
 
-SL_COMMENT : '//' (~'\n')* '\n' -> skip;
+RCURLY	: '}'
+	;
 
-CHAR : '\'' (ESC|LETRAS|INT) '\'';
-STRING : '\"' (WS_|ESC|LETRAS|INT|SIM)*'\"';
+CLEFT	: '['
+	;
 
-HEX : '0x'('a'..'f'|'A'..'F'|INT)+;
+CRIGHT	: ']'
+	;
 
-NUM : INT(INT)*;
+PLEFT	: '('
+	;
+
+PRIGHT	: ')'
+	;
+
+
+VEZES	: '*'
+	;
+
+MENOS	: '-'
+	;
+
+MAIS	: '+'
+	;
+	
+E	: '&&'
+	;
+
+
+MENORQ	: '<'
+	;
+
+MENORIGUAL	: '<='
+		;
+
+DIFERENTE	: '!='
+		;
+
+
+
+ID	: (LETRAS|ESPC)(LETRAS|INT|ESPC)*
+	;
+
+WS_	: [ \t\r\n]+ -> skip
+	;
+
+CHAR	: '\'' (ESC|LETRAS|INT) '\''
+	;
+
+STRING	: '\"' (WS_|ESC|LETRAS|INT|SIM)*'\"'
+	;
+
+HEX	: '0x'('a'..'f'|'A'..'F'|INT)+
+	;
+
+NUM	: INT(INT)*
+	;
+
+SL_COMMENT	: '//' (~'\n')* '\n' -> skip
+		;
+
 
 fragment
-ESC :  '\\' ('n'|'"'|'t'|'\\');
+ESC	:  '\\' ('n'|'"'|'t'|'\\')
+	;
 
 fragment 
-SIM : ( '\\\"'|'.'|','|'?'|'\\\''|':');
+SIM	: ( '\\\"'|'.'|','|'?'|'\\\''|':')
+	;
 
 fragment
-INT : ('0'..'9')+;
+INT	: ('0'..'9')+
+	;
 
 fragment
-ESPC : ('_');
+ESPC	: ('_')
+	;
 
 fragment
-LETRAS : ('a'..'z'|'A'..'Z');
+LETRAS	: ('a'..'z'|'A'..'Z')
+	;
