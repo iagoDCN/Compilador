@@ -45,7 +45,10 @@ class Main {
                                 break;
                             case DecafLexer.IF:
                                 type = "";
-                                break;      
+                                break;
+                            case DecafLexer.STRING:
+                                type = " STRINGLITERAL";
+                                break;          
 		        			}
 		        			System.out.println (token.getLine() + type + " " + text);
 		        		}
