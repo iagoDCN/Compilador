@@ -70,21 +70,48 @@ PRIGHT	: ')'
 	;
 
 
-VEZES	: '*'
-	;
+OU : '||'
+    ;
 
-MENOS	: '-'
-	;
+EXCL : '!'
+    ;
 
-MAIS	: '+'
-	;
-	
-E	: '&&'
-	;
+ATRIB : '='
+    ;
 
+ADIC : '+'
+    ;
+
+SUBTRAC : '-'
+    ;
+MULT : '*'
+    ;
+E : '&&'
+    ;
+
+IG : '=='
+    ;
+
+DIV : '/'
+    ;
+
+MOD : '%'
+    ;
+
+PONTVIRG : ';'
+    ;
+VIRGULA : ','
+	;
+DOIS_PONTOS : ':'
+	;
 
 MENORQ	: '<'
 	;
+MAIORQ : '>'
+    ;
+
+MAIORIGUAL : '>='
+    ;
 
 MENORIGUAL	: '<='
 		;
@@ -93,11 +120,12 @@ DIFERENTE	: '!='
 		;
 
 
-
-ID	: (LETRAS|ESPC)(LETRAS|INT|ESPC)*
+ID	: (LETRAS|ESPC)(LETRAS|ESPC|INT)*
 	;
 
 WS_	: [ \t\r\n]+ -> skip
+	;
+SL_COMMENT	: '//' (~'\n')* '\n' -> skip
 	;
 
 CHAR	: '\'' (ESC|LETRAS|INT) '\''
@@ -106,15 +134,13 @@ CHAR	: '\'' (ESC|LETRAS|INT) '\''
 STRING	: '\"' (WS_|ESC|LETRAS|INT|SIM)*'\"'
 	;
 
-HEX	: '0x'('a'..'f'|'A'..'F'|INT)+
+HEX	:   '0x'('a'..'f'|'A'..'F'|INT)+
 	;
+ERRO_HEX : '0x'
+    ;
 
 NUM	: INT(INT)*
 	;
-
-SL_COMMENT	: '//' (~'\n')* '\n' -> skip
-		;
-
 
 fragment
 ESC	:  '\\' ('n'|'"'|'t'|'\\')
@@ -125,7 +151,7 @@ SIM	: ( '\\\"'|'.'|','|'?'|'\\\''|':')
 	;
 
 fragment
-INT	: ('0'..'9')+
+INT	: ('0'..'9')
 	;
 
 fragment

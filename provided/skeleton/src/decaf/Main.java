@@ -34,7 +34,7 @@ class Main {
 							case DecafLexer.ID:
 								type = " IDENTIFIER";
 								break;
-		                    			case DecafLexer.CHAR:
+		                    case DecafLexer.CHAR:
 								type = " CHARLITERAL";
 								break;
 							case DecafLexer.HEX:
@@ -50,10 +50,13 @@ class Main {
 							case DecafLexer.BOOLEANLITERAL:
 								type = " BOOLEANLITERAL";
 								break; 
-
+                            case DecafLexer.ERRO_HEX:
+        	                   throw new Exception ("line "+ token.getLine()+ ":" + token.getCharPositionInLine()+ " token recognition erro at:  \'0x\'");
+                                
 						}
 		        			System.out.println (token.getLine() + type + " " + text);
 		        		}
+
 		        		done = true;
         			} catch(Exception e) {
         	        	// print the error:
