@@ -6,7 +6,7 @@
 
 - 2º_ De git clone para clonar o repositório
 
-- 3º_ Entre na pasta da seguinte forma compilador/lab02/provided/skeleton
+- 3º_ Entre na pasta da seguinte forma Compilador/provided/skeleton
 
 - 4º_ Use o comando "ant" para compilar o projeto
 
