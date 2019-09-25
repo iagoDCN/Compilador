@@ -9,10 +9,6 @@ options
   language=Java;
 }
 
-tokens
-{
-  TK_class
-}
 
 T_IF	: 'if'
 	;
@@ -47,6 +43,8 @@ T_BOOLEAN	: 'boolean'
 T_RETURN	: 'return'
 		;
 
+
+T_MAIN: 'main';
 
 BOOLEANLITERAL	: 'true' | 'false'
 		;
