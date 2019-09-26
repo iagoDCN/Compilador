@@ -3,7 +3,7 @@ lexer grammar DecafLexer;
 @header {
 package decaf;
 }
-
+ 
 options
 {
   language=Java;
@@ -31,8 +31,6 @@ T_CONTINUE: 'continue';
 T_BOOLEAN: 'boolean';
 
 T_RETURN: 'return';
-
-T_MAIN: 'main';
 
 BOOLEANLITERAL: 'true' | 'false';
 

@@ -18,7 +18,7 @@ method_decl: (type | T_VOID) ID PLEFT PRIGHT block;
 
 block: LCURLY var_decl* statement* RCURLY;
 
-var_decl: (type ID | type ID CLEFT NUM CRIGHT) (VIRGULA type? ID | VIRGULA type? ID CLEFT NUM CRIGHT)* PONTVIRG;
+var_decl: type ID (VIRGULA ID)* PONTVIRG;
 
 type: T_INT | T_BOOLEAN;
 
