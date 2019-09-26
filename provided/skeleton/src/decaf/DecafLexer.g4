@@ -10,152 +10,111 @@ options
 }
 
 
-T_IF	: 'if'
-	;
+T_IF: 'if';
 
-T_ELSE	: 'else'
-	;
+T_ELSE: 'else';
 
-T_CLASS	: 'class'
-	;
+T_CLASS: 'class';
 
-T_INT	: 'int'
-	;
+T_INT: 'int';
 
-T_VOID	: 'void'
-	;
+T_VOID: 'void';
 
-T_FOR	: 'for'
-	;
+T_FOR: 'for';
 
-T_BREAK	: 'break'
-	;
+T_BREAK: 'break';
 
-T_CALLOUT	: 'callout'
-		;
+T_CALLOUT: 'callout';
 
-T_CONTINUE	: 'continue'
-		;
+T_CONTINUE: 'continue';
 
-T_BOOLEAN	: 'boolean'
-		;
+T_BOOLEAN: 'boolean';
 
-T_RETURN	: 'return'
-		;
-
+T_RETURN: 'return';
 
 T_MAIN: 'main';
 
-BOOLEANLITERAL	: 'true' | 'false'
-		;
+BOOLEANLITERAL: 'true' | 'false';
 
-LCURLY	: '{'
-	;
+LCURLY: '{';
 
-RCURLY	: '}'
-	;
+RCURLY: '}';
 
-CLEFT	: '['
-	;
+CLEFT: '[';
 
-CRIGHT	: ']'
-	;
+CRIGHT: ']';
 
-PLEFT	: '('
-	;
+PLEFT: '(';
 
-PRIGHT	: ')'
-	;
+PRIGHT: ')';
 
+OU: '||';
 
-OU : '||'
-    ;
+EXCL: '!';
 
-EXCL : '!'
-    ;
+ATRIB: '=';
 
-ATRIB : '='
-    ;
+ADIC: '+';
 
-ADIC : '+'
-    ;
+SUBTRAC: '-';
 
-SUBTRAC : '-'
-    ;
-MULT : '*'
-    ;
-E : '&&'
-    ;
+MULT: '*';
 
-IG : '=='
-    ;
+E: '&&';
 
-DIV : '/'
-    ;
+IG: '==';
 
-MOD : '%'
-    ;
+DIV: '/';
 
-PONTVIRG : ';'
-    ;
-VIRGULA : ','
-	;
-DOIS_PONTOS : ':'
-	;
+MOD: '%';
 
-MENORQ	: '<'
-	;
-MAIORQ : '>'
-    ;
+MAIS_IGUAL: '+=';
 
-MAIORIGUAL : '>='
-    ;
+MENOS_IGUAL: '-=';
 
-MENORIGUAL	: '<='
-		;
+PONTVIRG: ';';
 
-DIFERENTE	: '!='
-		;
+VIRGULA: ',';
 
+DOIS_PONTOS: ':';
 
-ID	: (LETRAS|ESPC)(LETRAS|ESPC|INT)*
-	;
+MENORQ: '<';
 
-WS_	: [ \t\r\n]+ -> skip
-	;
-SL_COMMENT	: '//' (~'\n')* '\n' -> skip
-	;
+MAIORQ: '>';
 
-CHAR	: '\'' (ESC|LETRAS|INT) '\''
-	;
+MAIORIGUAL: '>=';
 
-STRING	: '\"' (WS_|ESC|LETRAS|INT|SIM)*'\"'
-	;
+MENORIGUAL: '<=';
 
-HEX	:   '0x'('a'..'f'|'A'..'F'|INT)+
-	;
-ERRO_HEX : '0x'
-    ;
+DIFERENTE: '!=';
 
-NUM	: INT(INT)*
-	;
+ID: (LETRAS|ESPC)(LETRAS|ESPC|INT)*;
+
+WS_: [ \t\r\n]+ -> skip;
+
+SL_COMMENT	: '//' (~'\n')* '\n' -> skip;
+
+CHAR: '\'' (ESC|LETRAS|INT) '\'';
+
+STRING	: '\"' (WS_|ESC|LETRAS|INT|SIM)*'\"';
+
+HEX	:   '0x'('a'..'f'|'A'..'F'|INT)+;
+
+ERRO_HEX : '0x';
+
+NUM	: INT(INT)*;
 
 fragment
-ESC	:  '\\' ('n'|'"'|'t'|'\\')
-	;
+ESC:  '\\' ('n'|'"'|'t'|'\\');
 
 fragment 
-SIM	: ( '\\\"'|'.'|','|'?'|'\\\''|':')
-	;
+SIM: ( '\\\"'|'.'|','|'?'|'\\\''|':');
 
 fragment
-INT	: ('0'..'9')
-	;
+INT: ('0'..'9');
 
 fragment
-ESPC	: ('_')
-	;
+ESPC: ('_');
 
 fragment
-LETRAS	: ('a'..'z'|'A'..'Z')
-	;
+LETRAS	: ('a'..'z'|'A'..'Z');
