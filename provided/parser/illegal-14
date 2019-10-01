@@ -1,5 +1,5 @@
 class Program {
-  int main(a) {	// no parameter type
+  int func(a) {	// no parameter type
   }
 }
 

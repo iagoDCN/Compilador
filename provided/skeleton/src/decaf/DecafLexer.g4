@@ -9,7 +9,6 @@ options
   language=Java;
 }
 
-
 T_IF: 'if';
 
 T_ELSE: 'else';
@@ -94,13 +93,13 @@ SL_COMMENT	: '//' (~'\n')* '\n' -> skip;
 
 CHAR: '\'' (ESC|LETRAS|INT) '\'';
 
-STRING	: '\"' (WS_|ESC|LETRAS|INT|SIM)*'\"';
+STRING: '\"' (WS_|ESC|LETRAS|INT|SIM)*'\"';
 
-HEX	:   '0x'('a'..'f'|'A'..'F'|INT)+;
+HEX:   '0x'('a'..'f'|'A'..'F'|INT)+;
 
-ERRO_HEX : '0x';
+ERRO_HEX: '0x';
 
-NUM	: INT(INT)*;
+NUM: INT(INT)*;
 
 fragment
 ESC:  '\\' ('n'|'"'|'t'|'\\');
@@ -115,4 +114,4 @@ fragment
 ESPC: ('_');
 
 fragment
-LETRAS	: ('a'..'z'|'A'..'Z');
+LETRAS: ('a'..'z'|'A'..'Z');
