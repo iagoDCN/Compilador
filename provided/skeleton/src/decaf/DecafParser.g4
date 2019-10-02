@@ -34,7 +34,7 @@ statement: location assing_op expr PONTVIRG
 
 assing_op: ATRIB | MAIS_IGUAL | MENOS_IGUAL;
 
-method_call: method_name PLEFT ((expr) (VIRGULA expr)*)? PRIGHT | T_CALLOUT PLEFT STRING (VIRGULA callout_arg) PRIGHT;
+method_call: method_name PLEFT ((expr) (VIRGULA expr)*)? PRIGHT | T_CALLOUT PLEFT STRING VIRGULA STRING (VIRGULA callout_arg) PRIGHT;
 
 method_name: ID;
 
