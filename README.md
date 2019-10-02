@@ -14,10 +14,11 @@
 
 OBS: 
  - Todos os arquivos estão na pasta Scanner.
+ - Todos oa arquivos referentes ao parser estão na pasta parser.
 
 OBS2: 
  - Caso os camandos acima não funcionem, utilize os passos abaixo:
- 
+
  # INSTALANDO ANTLR
  - cd /usr/local/lib
  
@@ -31,3 +32,5 @@ OBS2:
  
  OBS3: Pronto ! Agora só seguir os passos de exucução.
 
+ OBS4:
+ - Para rodar os testes do Parser utilize o comando: java -jar dist/Compiler.jar -target parse -debug ../parser/nome_arquivo. 
