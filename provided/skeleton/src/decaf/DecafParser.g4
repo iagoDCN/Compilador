@@ -12,13 +12,17 @@ options
 
 program: T_CLASS ID LCURLY field_decl* method_decl* RCURLY EOF;
 
-field_decl: (type ID | type ID CLEFT int_literal CRIGHT) (VIRGULA type? ID | VIRGULA type? ID CLEFT int_literal CRIGHT)* PONTVIRG;
+field_decl: (type ID | type_id CLEFT int_literal CRIGHT) (VIRGULA type_id_op | VIRGULA type_id_op CLEFT int_literal CRIGHT)* PONTVIRG;
 
-method_decl: (type | T_VOID) ID PLEFT ((type ID | type ID CLEFT int_literal CRIGHT) (VIRGULA type? ID | VIRGULA type? ID CLEFT int_literal CRIGHT)*)* PRIGHT block;
+method_decl: (type | T_VOID) ID PLEFT type_id (VIRGULA type_id_op)* PRIGHT block;
 
 block: LCURLY var_decl* statement* RCURLY;
 
-var_decl: type ID (VIRGULA ID)* PONTVIRG;
+var_decl: type_id (VIRGULA ID)* PONTVIRG;
+
+type_id: type ID;
+
+type_id_op: type? ID;
 
 type: T_INT | T_BOOLEAN;
 
