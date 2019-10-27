@@ -85,21 +85,23 @@ MENORIGUAL: '<=';
 
 DIFERENTE: '!=';
 
-ID: (LETRAS|ESPC)(LETRAS|ESPC|INT)*;
+ID: (LET|ESPC)(LET|ESPC|INT)*;
 
 WS_: [ \t\r\n]+ -> skip;
 
 SL_COMMENT	: '//' (~'\n')* '\n' -> skip;
 
-CHAR: '\'' (ESC|LETRAS|INT) '\'';
+CHAR: '\'' (ESC|LET|INT) '\'';
 
-STRING: '\"' (WS_|ESC|LETRAS|INT|SIM)*'\"';
+STRING: '\"' (WS_|ESC|LET|INT|SIM)*'\"';
 
 HEX:   '0x'('a'..'f'|'A'..'F'|INT)+;
 
 ERRO_HEX: '0x';
 
 NUM: INT(INT)*;
+
+LET: LETRAS(LETRAS)*;
 
 fragment
 ESC:  '\\' ('n'|'"'|'t'|'\\');

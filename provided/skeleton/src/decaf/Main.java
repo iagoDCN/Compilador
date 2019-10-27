@@ -16,6 +16,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java6035.tools.CLI.*;
 import decaf.DecafSymbolsAndScopes;
+import javax.swing.JScrollPane;
 
 class Main {
     public static void main(String[] args) {
@@ -121,28 +122,33 @@ class Main {
 				walker.walk(def, tree);
 
 				if (CLI.debug) {
-					// Se estiver no modo debug imprime a árvore de parsing
-					// Create Tree View
-					// Source: https://stackoverflow.com/questions/23809005/how-to-display-antlr-tree-gui
+                // Se estiver no modo debug imprime a árvore de parsing
+                // Create Tree View
+                // Source: https://stackoverflow.com/questions/23809005/how-to-display-antlr-tree-gui
 
 
-					//show AST in console
-					System.out.println(tree.toStringTree(parser));
+                //show AST in console
+                System.out.println(tree.toStringTree(parser));
 
-					//show AST in GUI
-					JFrame frame = new JFrame("Antlr AST");
-					JPanel panel = new JPanel();
-					TreeViewer viewr = new TreeViewer(Arrays.asList(
-							parser.getRuleNames()),tree);
-					viewr.setScale(1.5);//scale a little
-					panel.add(viewr);
-					frame.add(panel);
-					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setSize(600,400);
-					frame.setVisible(true);
-				}
+                //show AST in GUI
+                JFrame frame = new JFrame("Antlr AST");
+                JPanel panel = new JPanel();
+                JScrollPane scrollPane = new JScrollPane(panel);
+                scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                scrollPane.setBounds(50, 30, 300, 50);
+                TreeViewer viewr = new TreeViewer(Arrays.asList(
+                parser.getRuleNames()),tree);
+                viewr.setScale(1.5);//scale a little
+                panel.add(viewr);
+                frame.add(scrollPane);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(1024,768);
+                frame.setVisible(true);
+        }
 
-			}
+      }
+
             
         } catch(Exception e) {
             // print the error:
