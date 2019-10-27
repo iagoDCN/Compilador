@@ -86,6 +86,7 @@ class Main {
                 ParseTree tree = parser.program();
 
                 if (CLI.debug) {
+                    // coments
                     // Se estiver no modo debug imprime a Ã¡rvore de parsing
                     // Create Tree View
                     // Source: https://stackoverflow.com/questions/23809005/how-to-display-antlr-tree-gui
