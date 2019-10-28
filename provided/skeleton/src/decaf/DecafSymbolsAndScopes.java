@@ -28,8 +28,13 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
 
     @Override
     public void exitProgram(DecafParser.ProgramContext ctx) {
-        popScope();
-        System.out.println(globals);
+        if (globals.resolve("main") == null)
+        {
+            this.error(ctx.RCURLY().getSymbol(), "Método \'main\' não encontrado.");
+
+        }
+         popScope();
+         //System.out.println(globals);
     }
 
     @Override
@@ -52,7 +57,7 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
         popScope();
     }
 
-    @Override
+    /*@Override
     public void enterBlock(DecafParser.BlockContext ctx) {
         LocalScope l = new LocalScope(currentScope);
         saveScope(ctx, currentScope);
@@ -62,8 +67,8 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
     @Override
     public void exitBlock(DecafParser.BlockContext ctx) {
         popScope();
-    }
-
+    }*/
+     
     @Override
     public void enterType_id(DecafParser.Type_idContext ctx) {
         for (int i = 0; i < ctx.ID().size(); i++ ){
@@ -124,8 +129,7 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
     }
 
     public static void error(Token t, String msg) {
-        System.err.printf("line %d:%d %s\n", t.getLine(), t.getCharPositionInLine(),
-                msg);
+        System.err.printf("line %d:%d %s\n", t.getLine(), t.getCharPositionInLine(),msg);
     }
 
     /**

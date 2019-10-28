@@ -14,7 +14,7 @@ program: T_CLASS ID LCURLY field_decl* method_decl* RCURLY EOF;
 
 field_decl: (type_id(VIRGULA type_id)* | type_id CLEFT int_literal CRIGHT (VIRGULA type_id CLEFT int_literal CRIGHT)*) PONTVIRG;
 
-method_decl: (type | T_VOID) ID PLEFT (type_id(VIRGULA type_id)*)? PRIGHT LCURLY var_decl* statement* RCURLY;
+method_decl: (type | T_VOID) ID PLEFT (type_id(VIRGULA type_id)*)? PRIGHT block;
 
 block: LCURLY var_decl* statement* RCURLY;
 
