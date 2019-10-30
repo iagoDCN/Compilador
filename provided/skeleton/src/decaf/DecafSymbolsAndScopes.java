@@ -10,15 +10,19 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import decaf.DecafParser.StatementContext;
-
+import java.util.ArrayList;
 
 /**
  * This class defines basic symbols and scopes for Decaf language
  */
 public class DecafSymbolsAndScopes extends DecafParserBaseListener {
     ParseTreeProperty<Scope> scopes = new ParseTreeProperty<Scope>();
+    ArrayList<String> varlist = new ArrayList();
+    ArrayList<String> escopo = new ArrayList();
+    ArrayList<String> metodo = new ArrayList();
     GlobalScope globals;
     Scope currentScope; // define symbols in this scope
+    //String a = "vazio";
 
     @Override
     public void enterProgram(DecafParser.ProgramContext ctx) {
@@ -31,7 +35,7 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
         if (globals.resolve("main") == null)
         {
             this.error(ctx.RCURLY().getSymbol(), "Método \'main\' não encontrado.");
-
+            System.exit(0);
         }
          popScope();
          //System.out.println(globals);
@@ -68,16 +72,51 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
     public void exitBlock(DecafParser.BlockContext ctx) {
         popScope();
     }*/
-     
+    @Override public void enterStatement(DecafParser.StatementContext ctx) { 
+        try{
+
+            String var = ctx.location().ID().getText();
+            if(! varlist.contains(var) ){
+                this.error(ctx.location().ID().getSymbol(), "Variavel não declarada");
+                System.exit(0);
+            }
+        }catch(Exception e){}
+    }
+    
     @Override
     public void enterType_id(DecafParser.Type_idContext ctx) {
-        for (int i = 0; i < ctx.ID().size(); i++ ){
-        defineVar(ctx.type(), ctx.ID().get(i).getSymbol());
+        //for (int i = 0; i < ctx.ID().size(); i++ ){
+        defineVar(ctx.type(), ctx.ID().getSymbol());
+        this.varlist.add(ctx.ID().getText());
     }
-}
+
 
     @Override
     public void exitType_id(DecafParser.Type_idContext ctx) {
+        //for (int i = 0; i < ctx.ID().size(); i++ ){
+        String name = ctx.ID().getSymbol().getText();
+        Symbol defineVar = currentScope.resolve(name);
+        if ( defineVar == null ) {
+            this.error(ctx.ID().getSymbol(), "no such variable: "+name);
+        }
+        if ( defineVar instanceof FunctionSymbol ) {
+            this.error(ctx.ID().getSymbol(), name+" is not a variable");
+        //}
+    }
+}
+    @Override
+    public void enterVar_decl(DecafParser.Var_declContext ctx) {
+        String variavel_local = "";
+        for (int i = 0; i < ctx.ID().size(); i++ ){
+        variavel_local = variavel_local + ctx.ID().get(i).getText()+", ";
+        defineVar(ctx.type(), ctx.ID().get(i).getSymbol());
+        this.varlist.add(ctx.ID().get(i).getText());
+    }
+}
+
+
+    @Override
+    public void exitVar_decl(DecafParser.Var_declContext ctx) {
         for (int i = 0; i < ctx.ID().size(); i++ ){
         String name = ctx.ID().get(i).getSymbol().getText();
         Symbol defineVar = currentScope.resolve(name);
@@ -86,9 +125,41 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
         }
         if ( defineVar instanceof FunctionSymbol ) {
             this.error(ctx.ID().get(i).getSymbol(), name+" is not a variable");
+        //}
         }
     }
+}
+    @Override
+    public void enterField_decl(DecafParser.Field_declContext ctx) {
+        //for (int i = 0; i < ctx.ID().size(); i++ ) {
+            try{
+                //String var = ctx.int_literal().getText();
+                for (int i = 0; i < ctx.ID().size(); i++ ) {
+                if(Integer.parseInt(ctx.int_literal().getText()) <= 0) {
+                    System.out.println("oiiiiii");
+                    this.error(ctx.int_literal().hex_literal().HEX().getSymbol(), "Bad Array Size");
+                    System.exit(0);
+                    }
+                }
+           }catch (Exception e){}
+}
+
+
+    @Override
+    public void exitField_decl(DecafParser.Field_declContext ctx) {
+        for (int i = 0; i < ctx.ID().size(); i++ ){
+        String name = ctx.ID().get(i).getSymbol().getText();
+        Symbol defineVar = currentScope.resolve(name);
+        
+        if ( defineVar == null ) {
+            this.error(ctx.ID().get(i).getSymbol(), "no such variable: "+name);
+        }
+        if ( defineVar instanceof FunctionSymbol ) {
+            this.error(ctx.ID().get(i).getSymbol(), name+" is not a variable");
+        //}
     }
+}
+}
 
     void defineVar(DecafParser.TypeContext typeCtx, Token nameToken) {
         //int typeTokenType = typeCtx.start.getType();

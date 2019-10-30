@@ -12,15 +12,15 @@ options
 
 program: T_CLASS ID LCURLY field_decl* method_decl* RCURLY EOF;
 
-field_decl: (type_id(VIRGULA type_id)* | type_id CLEFT int_literal CRIGHT (VIRGULA type_id CLEFT int_literal CRIGHT)*) PONTVIRG;
+field_decl: (type_id | type_id CLEFT int_literal CRIGHT) (VIRGULA ID)* PONTVIRG;
 
 method_decl: (type | T_VOID) ID PLEFT (type_id(VIRGULA type_id)*)? PRIGHT block;
 
 block: LCURLY var_decl* statement* RCURLY;
 
-var_decl: type_id (VIRGULA ID)* PONTVIRG;
+var_decl: type (ID(VIRGULA ID)*)* PONTVIRG;
 
-type_id: type ID (VIRGULA ID)*;
+type_id: type ID ;
 
 type: T_INT | T_BOOLEAN;
 
