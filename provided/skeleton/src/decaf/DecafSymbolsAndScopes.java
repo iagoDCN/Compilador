@@ -133,9 +133,7 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
     }*/
     @Override public void enterStatement(DecafParser.StatementContext ctx) { 
         try{
-
             String var = ctx.location().ID().getText();
-           
             if(! varlist.contains(var) ) {
                 this.error(ctx.location().ID().getSymbol(), "Variavel não declarada");
                 System.exit(0);
@@ -143,6 +141,7 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
 
         }catch (Exception e) {}
     }
+    
 
     @Override public void enterMethod_call(DecafParser.Method_callContext ctx){
     }
@@ -156,8 +155,30 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
             }    
         }
     }catch(Exception e){}
-}
+
+        try{
+        for(int i=0;i<ctx.expr().size();i++) {
+
+                if(ctx.expr().get(i).literal() != null){
+    }
+                    if(ctx.expr().get(i).literal().getText().equals("false") || ctx.expr().get(i).literal().getText().equals("true")){
+                        //para boolean
+                        if(!this.escopo.contains(ctx.method_name().ID().getText()+","+ i)){
+                            this.error(ctx.expr(0).literal().bool_literal().BOOLEANLITERAL().getSymbol(),"types don't match signature");
+                            System.exit(0);
+                        }
+                    }else{
+                        //para int
+                        if(!this.escopo.contains(ctx.method_name().ID().getText()+","+ i)) {
+                            this.error(ctx.expr(1).literal().int_literal().decimal_literal().NUM().getSymbol(),"types don't match signature");
+                            System.exit(0);
+                        }
+                    }   
+                }
+            }catch(Exception e){}
+        }
     
+
     @Override
     public void enterType_id(DecafParser.Type_idContext ctx) {
         //for (int i = 0; i < ctx.ID().size(); i++ ){
