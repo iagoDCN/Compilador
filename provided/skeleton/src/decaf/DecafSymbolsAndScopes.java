@@ -140,9 +140,27 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
             }
 
         }catch (Exception e) {}
-    }
-    
 
+        try{
+                int porra = Integer.parseInt(ctx.location().expr().getText());
+                    if(!this.varlist.contains(porra)) {
+                        this.error(ctx.location().ID().getSymbol(),"bad type, rhs should be an int");
+                        System.exit(0);
+                    }
+                }catch(Exception e){}
+
+                    try{
+                        for(int i = 0; i<ctx.expr().size(); i++){
+                            if(ctx.location().CLEFT() != null){
+                        if(!this.escopo.contains(ctx.location().ID().getText()+","+ i)) {
+                            this.error(ctx.expr(0).literal().int_literal().decimal_literal().NUM().getSymbol(),"array index has wrong type");
+                            System.exit(0);
+                        }
+                    }
+                    }
+                }catch(Exception e){}
+            }
+    
     @Override public void enterMethod_call(DecafParser.Method_callContext ctx){
     }
 
