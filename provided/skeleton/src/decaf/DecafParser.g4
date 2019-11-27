@@ -20,7 +20,7 @@ block: LCURLY var_decl* statement* RCURLY;
 
 var_decl: type (ID(VIRGULA ID)*)* PONTVIRG;
 
-type_id: type ID ;
+type_id: type ID;
 
 type: T_INT | T_BOOLEAN;
 

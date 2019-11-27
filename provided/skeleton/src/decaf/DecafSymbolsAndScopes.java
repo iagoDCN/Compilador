@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import decaf.DecafParser.StatementContext;
 import java.util.ArrayList;
+import org.antlr.symtab.ParameterSymbol;
 
 /**
  * This class defines basic symbols and scopes for Decaf language
@@ -22,7 +23,8 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
     ArrayList<String> metodo = new ArrayList();
     GlobalScope globals;
     Scope currentScope; // define symbols in this scope
-    //String a = "vazio";
+    Boolean a;
+    String typeM;
 
     @Override
     public void enterProgram(DecafParser.ProgramContext ctx) {
@@ -37,15 +39,33 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
             this.error(ctx.RCURLY().getSymbol(), "Método \'main\' não encontrado.");
             System.exit(0);
         }
-         popScope();
-         //System.out.println(globals);
+        popScope();
+        //System.out.println(globals);
     }
 
     @Override
     public void enterMethod_decl(DecafParser.Method_declContext ctx) {
         String name = ctx.ID().getText();
+        this.a = false;
+        this.metodo.add(name +","+ ctx.type_id().size()); // {nome,quantidade de parametros}
         //int typeTokenType = ctx.type().start.getType();
         //DecafSymbol.Type type = this.getType(typeTokenType);
+
+	   for(int i=0;i<ctx.type_id().size();i++){
+            this.escopo.add(name +","+ ctx.type_id().get(i).type().getText()); // {nome, posição do parametro, tipo do parametro}
+
+        }
+
+        try{
+            this.typeM = ctx.type().getText();
+        }catch (Exception e){}
+
+        try{
+            if(ctx.T_VOID().getText().equals("void")){
+                this.a = true;
+            }
+        }catch (Exception e){}
+
 
         // push new scope by making new one that points to enclosing scope
         FunctionSymbol function = new FunctionSymbol(name);
@@ -59,6 +79,44 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
 
     @Override
     public void exitMethod_decl(DecafParser.Method_declContext ctx) {
+        try{
+
+            if(a == true){
+                for(int i=0;i<ctx.block().statement().size();i++){
+                    if(ctx.block().statement().get(i).T_RETURN().getText().equals("return")){
+                        this.error(ctx.block().statement().get(i).T_RETURN().getSymbol(),"should not return value");
+                        System.exit(0);
+                    }
+                }
+            }else{ 
+
+                for(int i=0;i<ctx.block().statement().size();i++){
+                    if(ctx.block().statement().get(i).T_RETURN().getText().equals("return")){
+                        for(int j=0;j<ctx.block().statement().get(i).expr().size();j++) {
+
+                            //entra no literal (boolean ou int)
+                            if(ctx.block().statement().get(i).expr().get(j).literal() != null){
+
+                                String literal = ctx.block().statement().get(i).expr().get(j).literal().getText();
+
+                                //caso o tipo seja 'boolean' e receba um valor diferente
+                                if(this.typeM.equals("boolean") && !(literal.equals("false") || literal.equals("true"))){
+                                    this.error(ctx.ID().getSymbol(),"return value has wrong type");
+                                    System.exit(0);
+                                }
+
+                                //caso o tipo seja 'int' e receba um valor diferente
+                                if(this.typeM.equals("int") && !(this.numbers(literal))){
+                                    this.error(ctx.ID().getSymbol(),"return value has wrong type");
+                                    System.exit(0);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){}
         popScope();
     }
 
@@ -77,12 +135,28 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
         try{
 
             String var = ctx.location().ID().getText();
+           
             if(! varlist.contains(var) ) {
                 this.error(ctx.location().ID().getSymbol(), "Variavel não declarada");
                 System.exit(0);
             }
-        }catch(Exception e){}
+
+        }catch (Exception e) {}
     }
+
+    @Override public void enterMethod_call(DecafParser.Method_callContext ctx){
+    }
+
+    @Override public void exitMethod_call(DecafParser.Method_callContext ctx){
+        try{
+            for(int i = 0 ; i < ctx.expr().size(); i++){
+            if(!this.metodo.contains(ctx.method_name().ID().getText()+","+ ctx.expr().size())){ 
+                this.error(ctx.expr(0).literal().int_literal().decimal_literal().NUM().getSymbol(),"argument mismatch");
+                System.exit(0);
+            }    
+        }
+    }catch(Exception e){}
+}
     
     @Override
     public void enterType_id(DecafParser.Type_idContext ctx) {
@@ -136,7 +210,8 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
                 if(Integer.parseInt(ctx.int_literal().getText()) <= 0) {
                     this.error(ctx.int_literal().decimal_literal().NUM().getSymbol(), "Bad Array Size");
                     System.exit(0);
-                    }
+                }  
+
            }catch (Exception e){}
 }
 
@@ -213,6 +288,20 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
         }
         return DecafSymbol.Type.tINVALID;
     }
+    /**
+     * Verifica se um texto só tem números
+     *
+     * @param texto
+     * @return
+     */
 
+    public boolean numbers(String texto) {
+        for (int i = 0; i < texto.length(); i++) {
+            if (!Character.isDigit(texto.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
